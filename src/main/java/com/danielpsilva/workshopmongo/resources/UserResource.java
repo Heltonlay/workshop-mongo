@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,5 +45,11 @@ public class UserResource {
 		user = userService.insert(user);
 		URI path = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(path).build();
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<User> deleteById(@PathVariable String id) {
+		userService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
